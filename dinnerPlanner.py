@@ -51,8 +51,10 @@ def main(frequency=False, ingredients=False, list_ingredients=False):
             if i > 1:
                 break
             ingredient_list = recipie[1][:-1]
-            print '\nLet me recommend "%s"' % recipie[0]
-            print _print_ingredients(ingredient_list)
+            score = recipie[1][-1]
+            if score:
+                print '\nLet me recommend "%s"' % recipie[0]
+                print _print_ingredients(ingredient_list)
 
 
 
