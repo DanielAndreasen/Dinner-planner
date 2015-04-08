@@ -12,6 +12,8 @@ def _parser():
                    help='You want a planner daily, weekly or monthly')
     p.add_argument('-i', '--ingredients', nargs='+', default=False,
                    help='List the ingredients here (space seperated)')
+    p.add_argument('-l', '--list', default=False, action='store_true',
+                   help='List the dishes available')
     return p.parse_args()
 
 
@@ -24,10 +26,15 @@ def _print_ingredients(ingredients):
     return s.format(*ingredients)
 
 
-def main(frequency=False, ingredients=False):
+def main(frequency=False, ingredients=False, list_ingredients=False):
     freq = {'d': 1, 'w': 7, 'm': 30}
     with open('recipies.yml', 'r') as f:
         recipies = yaml.safe_load(f)
+    if list_ingredients:
+        print 'The dishes available are...'
+        for k in recipies.keys():
+            print ' * %s' % k
+        return
 
     for k, v in recipies.iteritems():
         recipies[k] = v.split()
@@ -52,7 +59,8 @@ def main(frequency=False, ingredients=False):
 
 if __name__ == '__main__':
     p = _parser()
+
     if p.ingredients and p.frequency in 'wm':
         print 'Using the ingredient list only for 1 day'
         p.frequency = False
-    main(p.frequency, p.ingredients)
+    main(p.frequency, p.ingredients, p.list)
