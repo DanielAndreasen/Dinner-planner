@@ -34,7 +34,7 @@ def main(frequency=False, ingredients=False, list_ingredients=False):
         print 'The dishes available are...'
         for k in recipies.keys():
             print ' * %s' % k
-        return
+        return recipies
 
     for k, v in recipies.iteritems():
         recipies[k] = v.split()
